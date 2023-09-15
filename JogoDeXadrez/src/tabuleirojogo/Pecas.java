@@ -1,4 +1,4 @@
-package quadrojogo;
+package tabuleirojogo;
 
 public class Pecas {
 	protected Posicao posicao;
