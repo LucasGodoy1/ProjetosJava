@@ -1,5 +1,6 @@
 package br.com.cod3r.cm;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +35,17 @@ public class CampoTeste {
 		Campo vizinho = new Campo(2, 3);
 		boolean resultado = campo.adicionarVizinho(vizinho);
 		assertTrue(resultado);
+	}
+	@Test
+	void testeValorPadraoAlternarMarcacao() {
+		assertFalse(campo.isMarcado());
+	}
+	
+	@Test
+	void testeAlternarMarcacaoDuaschamadas() {
+		campo.alternarMarcado();
+		campo.alternarMarcado();
+		assertFalse(campo.isMarcado());
 	}
 	
 }
