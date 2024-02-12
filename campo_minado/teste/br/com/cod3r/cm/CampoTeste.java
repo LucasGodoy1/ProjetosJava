@@ -43,8 +43,8 @@ public class CampoTeste {
 	
 	@Test
 	void testeAlternarMarcacaoDuaschamadas() {
-		campo.alternarMarcado();
-		campo.alternarMarcado();
+		campo.alternarMarcacao();
+		campo.alternarMarcacao();
 		assertFalse(campo.isMarcado());
 	}
 	
