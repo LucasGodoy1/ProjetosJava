@@ -8,13 +8,10 @@ public class App {
 
     Opcoes inicio = new Opcoes();
     
-  //  inicio.primeiroMenu();
-
+    inicio.primeiroMenu();
 
     
-    LogoNakedBank logo = new LogoNakedBank();
-    
-    logo.mostrarLogo();
+   
     
 
     }

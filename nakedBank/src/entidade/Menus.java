@@ -2,21 +2,29 @@
 
 package entidade;
 
+import logo.LogoNakedBank;
+
 //essa classe está herdando opções de cadastro para concluir o menu
 public class Menus extends Cadastro{
-
-    Cadastro cadastro = new Cadastro();
+	
+    private LogoNakedBank logo = new LogoNakedBank();
+    private Cadastro cadastro = new Cadastro();
 
 
     public Menus() {
 
     }
 
+    
     public void menuDeCadastro(){
+    	logo.mostrarLogo();
+    	System.out.println();
+    	
         System.out.println("Nome: ");
         cadastro.setNome(sc.next());
+        
         sc.nextLine();
-        System.out.println("SobreNome: ");
+        System.out.println("Sobrenome: ");
         cadastro.setSobreNome(sc.nextLine());
 
 
@@ -64,11 +72,13 @@ public class Menus extends Cadastro{
         } while(!sair);
 
     }
+    
     public void saldo(){
-        System.out.println();
+        System.out.println("==============");
         System.out.printf("R$: ", cadastro.getSaldo());
 
     }
+    
 
 
 }

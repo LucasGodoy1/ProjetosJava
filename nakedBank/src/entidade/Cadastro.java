@@ -16,10 +16,11 @@ public class Cadastro {
 
     protected Scanner sc = new Scanner(System.in);
 
-
+    //construtor sem parametros
     protected Cadastro() {
 
     }
+    
 
     protected String getNome() {
         return nome;
