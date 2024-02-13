@@ -1,3 +1,6 @@
+//essa classe será responsavel em conter todas as informações do usuario
+//e após algumas implementações futuras irá para um banco de dados
+
 package entidade;
 
 import java.util.Scanner;
@@ -36,42 +39,52 @@ public class Cadastro {
     }
 
     public String getEmail() {
+
         return email;
     }
 
     public void setEmail(String email) {
+
         this.email = email;
     }
 
     public String getTelefone() {
+
         return telefone;
     }
 
     public void setTelefone(String telefone) {
+
         this.telefone = telefone;
     }
 
     public String getCpf() {
+
         return cpf;
     }
 
     public void setCpf(String cpf) {
+
         this.cpf = cpf;
     }
 
     public String getPassWord() {
+
         return passWord;
     }
 
     public void setPassWord(String passWord) {
+
         this.passWord = passWord;
     }
 
     protected Double getSaldo() {
+
         return saldo;
     }
 
     private void setSaldo(Double salado) {
+
         this.saldo = salado;
     }
 

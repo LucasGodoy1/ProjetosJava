@@ -1,6 +1,6 @@
-package entidade;
+//essa classe é responsavel por exibir os menus e encaminhas para opção desejada
 
-import java.sql.SQLOutput;
+package entidade;
 
 //essa classe está herdando opções de cadastro para concluir o menu
 public class Menus extends Cadastro{
