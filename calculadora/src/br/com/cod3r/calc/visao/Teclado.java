@@ -1,10 +1,14 @@
 package br.com.cod3r.calc.visao;
 
+import br.com.cod3r.calc.modelo.Memoria;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
-public class Teclado extends JPanel {
+public class Teclado extends JPanel implements ActionListener{
 
     private final Color COR_CINZA_ESCURO = new Color(68, 68, 68);
     private final Color COR_CINZA_CLARO = new Color(99, 99, 99);
@@ -57,7 +61,18 @@ public class Teclado extends JPanel {
         c.gridx = x;
         c.gridy = y;
         Botao botao = new Botao(texto, cor);
+        botao.addActionListener(this);
         add(botao, c);
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() instanceof JButton){
+        JButton botao = (JButton) e.getSource();
+            Memoria.getInstancia().processarComando(botao.getText());
+
+        }
 
     }
 }
