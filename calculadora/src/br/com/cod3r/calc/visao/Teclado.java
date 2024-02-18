@@ -35,7 +35,7 @@ public class Teclado extends JPanel implements ActionListener{
         adicionarBotao("7", COR_CINZA_ESCURO, constrain, 0, 1);
         adicionarBotao("8", COR_CINZA_CLARO, constrain, 1, 1);
         adicionarBotao("9", COR_CINZA_CLARO, constrain, 2, 1);
-        adicionarBotao("/", COR_LARANJA, constrain, 3, 1);
+        adicionarBotao("*", COR_LARANJA, constrain, 3, 1);
 
         adicionarBotao("4", COR_CINZA_ESCURO, constrain, 0, 2);
         adicionarBotao("5", COR_CINZA_CLARO, constrain, 1, 2);
@@ -46,7 +46,7 @@ public class Teclado extends JPanel implements ActionListener{
         adicionarBotao("2", COR_CINZA_CLARO, constrain, 1, 3);
         adicionarBotao("3", COR_CINZA_CLARO, constrain, 2, 3);
         adicionarBotao("+", COR_LARANJA, constrain, 3, 3);
-        constrain.gridwidth = 3;//expande a constrain
+        constrain.gridwidth = 2;//expande a constrain
         adicionarBotao("0", COR_CINZA_ESCURO, constrain, 0, 4);
         constrain.gridwidth =1; //volta ao tamanho normal
 
