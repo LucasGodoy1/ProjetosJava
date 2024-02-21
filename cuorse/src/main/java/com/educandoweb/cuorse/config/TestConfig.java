@@ -1,3 +1,4 @@
+// essa é uma classe de configuração para instanciar o banco de dados
 package com.educandoweb.cuorse.config;
 
 import java.util.Arrays;
