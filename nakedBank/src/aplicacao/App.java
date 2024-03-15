@@ -1,16 +1,15 @@
 package aplicacao;
 
-import entidade.Opcoes;
-import logo.LogoNakedBank;
+import entidade.Menus;
+
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
 
-    Opcoes inicio = new Opcoes();
-    
-    inicio.primeiroMenu();
+   new Menus();
 
-    
+
    
     
 

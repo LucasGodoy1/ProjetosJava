@@ -20,7 +20,7 @@ public class Cadastro {
     protected Cadastro() {
 
     }
-    
+
 
     protected String getNome() {
         return nome;
@@ -79,23 +79,57 @@ public class Cadastro {
         this.passWord = passWord;
     }
 
-    protected Double getSaldo() {
+    public Double getSaldo() {
 
         return saldo;
     }
 
-    private void setSaldo(Double salado) {
-
-        this.saldo = salado;
+    private void setSaldo(Double saldo) {
+        this.saldo = saldo;
     }
 
-    public void addSaldo(Double sal){
-        if (sal >= 10.0){
-            setSaldo(sal += sal);
+    public void addSaldo(Double valor) {
+        setSaldo(this.saldo += valor);
+    }
+
+    public void removerSaldo(Double valor) {
+            System.out.printf("Saldo Disponivel: d%.2f", this.saldo);
+        if (saldo < valor) {
+            System.out.println("Saldo insuficiente");
         }
-
-
+        else {
+            setSaldo(this.saldo - valor);
+        }
     }
 
 
+    public String toStringBasico() {
+        return   "Nome: "
+                + nome
+                + " Sobrenome: "
+                + sobreNome
+                + String.format(" Saldo: %.2f", saldo);
+    }
+
+
+
+    public String toStringCompleto() {
+        return "Cadastro: \n" +
+                "Nome: "
+                + nome
+                + " Sobrenome: "
+                + sobreNome
+                + " Email: "
+                + email
+                + " telefone "
+                + telefone
+                + " CPF: "
+                + cpf;
+    }
 }
+
+
+
+
+
+
