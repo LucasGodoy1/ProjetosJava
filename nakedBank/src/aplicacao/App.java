@@ -2,10 +2,9 @@ package aplicacao;
 
 import entidade.Menus;
 
-import java.util.Scanner;
-
 public class App {
     public static void main(String[] args) {
+        //TODO JPA, springboot
 
    new Menus();
 
