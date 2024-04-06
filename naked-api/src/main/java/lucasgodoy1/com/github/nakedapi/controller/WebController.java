@@ -43,9 +43,9 @@ public class WebController {
 
     @GetMapping("/usuariosCadastrados")
     public ResponseEntity<List<Usuario>> cadastro(){
-        //List<Usuario> l = usuarioService.listaDeCadastros(); comecei a pensar que em grande escala esse objeto poderia dar problema de performance
-        //então a solução que pensei é chamar a lista diretamente.
-        return ResponseEntity.ok().body(usuarioService.listaDeCadastros());
+        List<Usuario> l = usuarioService.listaDeCadastros();
+        l.forEach(usuario -> usuario.setPassword("******"));
+        return ResponseEntity.ok().body(l);
     }
 
 

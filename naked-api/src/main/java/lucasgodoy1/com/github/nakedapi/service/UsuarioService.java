@@ -24,7 +24,7 @@ public class UsuarioService {
         return u;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Usuario alterarSenha(Long id, String senha){
         Usuario u = encontrePorID(id);
         u.setPassword(senha);
