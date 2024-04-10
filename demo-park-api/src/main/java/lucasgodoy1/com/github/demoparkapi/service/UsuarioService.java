@@ -1,12 +1,13 @@
 package lucasgodoy1.com.github.demoparkapi.service;
 
 
-
 import lombok.RequiredArgsConstructor;
 import lucasgodoy1.com.github.demoparkapi.entity.Usuario;
 import lucasgodoy1.com.github.demoparkapi.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -14,12 +15,12 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
 
     @Transactional
-    public Usuario salvar(Usuario usuario){
+    public Usuario salvar(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
 
     @Transactional(readOnly = true)
-    public Usuario buscarPorID(Long id){
+    public Usuario buscarPorID(Long id) {
         return usuarioRepository.findById(id).get();
 
     }
@@ -31,4 +32,12 @@ public class UsuarioService {
         user.setPassword(password);
         return user;
     }
+
+    @Transactional
+    public List<Usuario> getAll() {
+        List<Usuario> lista = usuarioRepository.findAll();
+        return lista;
+    }
+
+
 }
