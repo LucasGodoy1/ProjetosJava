@@ -18,12 +18,12 @@ public class WebController {
     @PostMapping("/create")
     public ResponseEntity<Usuario> create(@RequestBody Usuario usuario){
         usuarioService.salvar(usuario);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
     @PostMapping("/createlista")
     public ResponseEntity<List<Usuario>> createlista(@RequestBody List<Usuario> usuarios){
         usuarioService.salvarVarios(usuarios);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarios);
     }
 
 
@@ -56,9 +56,8 @@ public class WebController {
 
     @DeleteMapping("/deleteID={id}")
     public ResponseEntity<Usuario> deletarPorID(@PathVariable Long id){
-        Usuario u = usuarioService.encontrePorID(id);
         usuarioService.deletePorID(id);
-        return ResponseEntity.ok().body(u);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 
