@@ -15,7 +15,11 @@ public class UsuarioService {
 
     @Transactional
     public void salvar(Usuario u){
-       repository.save(u);
+        repository.save(u);
+    }
+    @Transactional
+    public void salvarVarios(List<Usuario> u){
+        repository.saveAll(u);
     }
 
     @Transactional
@@ -37,5 +41,13 @@ public class UsuarioService {
         //para diminuir futuros problemas de performance a chamada será direta sem variavel
         return repository.findAll();
     }
+
+    @Transactional
+    public void deletePorID(Long id){
+        repository.deleteById(id);
+    }
+
+
+
 
 }

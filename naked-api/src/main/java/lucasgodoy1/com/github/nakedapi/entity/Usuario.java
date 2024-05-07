@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Getter @Setter @ToString
 @RequiredArgsConstructor
@@ -28,6 +29,7 @@ public class Usuario implements Serializable {
 
     @Column(name="password", nullable = false, length = 200)
     private String password;
+
 
     //private Date dataCriacao;
 

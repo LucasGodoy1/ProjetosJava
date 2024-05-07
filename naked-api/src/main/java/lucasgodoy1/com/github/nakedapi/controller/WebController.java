@@ -17,21 +17,27 @@ public class WebController {
 
     @PostMapping("/create")
     public ResponseEntity<Usuario> create(@RequestBody Usuario usuario){
-    usuarioService.salvar(usuario);
-    return ResponseEntity.ok().build();
+        usuarioService.salvar(usuario);
+        return ResponseEntity.ok().build();
     }
+    @PostMapping("/createlista")
+    public ResponseEntity<List<Usuario>> createlista(@RequestBody List<Usuario> usuarios){
+        usuarioService.salvarVarios(usuarios);
+        return ResponseEntity.ok().build();
+    }
+
 
     @GetMapping("/dadosID={id}")
     public ResponseEntity<Usuario> dadosCompleto(@PathVariable Long id){
         Usuario u = usuarioService.encontrePorID(id);
-           return ResponseEntity.ok().body(u);
+        return ResponseEntity.ok().body(u);
     }
 
     @GetMapping("/buscarID={id}")
     public ResponseEntity<Usuario> buscarPorCPF(@PathVariable Long id){
-    Usuario u = usuarioService.encontrePorID(id);
-    u.setPassword("*****");
-    return ResponseEntity.ok().body(u);
+        Usuario u = usuarioService.encontrePorID(id);
+        u.setPassword("*****");
+        return ResponseEntity.ok().body(u);
     }
 
     @PatchMapping("/alterarSenha/id={id}")
@@ -46,6 +52,13 @@ public class WebController {
         List<Usuario> l = usuarioService.listaDeCadastros();
         l.forEach(usuario -> usuario.setPassword("******"));
         return ResponseEntity.ok().body(l);
+    }
+
+    @DeleteMapping("/deleteID={id}")
+    public ResponseEntity<Usuario> deletarPorID(@PathVariable Long id){
+        Usuario u = usuarioService.encontrePorID(id);
+        usuarioService.deletePorID(id);
+        return ResponseEntity.ok().body(u);
     }
 
 
