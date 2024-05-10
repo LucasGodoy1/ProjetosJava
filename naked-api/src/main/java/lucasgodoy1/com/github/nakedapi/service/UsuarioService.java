@@ -28,11 +28,10 @@ public class UsuarioService {
         return u;
     }
 
-    @Transactional(readOnly = true)
-    public Usuario alterarSenha(Long id, String senha){
-        Usuario u = encontrePorID(id);
-        u.setPassword(senha);
-        return u;
+    @Transactional
+    public  void alterarSenha(Long id, String senha){
+        Usuario usuario = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+        usuario.setPassword(senha);
     }
 
     @Transactional

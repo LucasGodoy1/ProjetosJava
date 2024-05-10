@@ -43,8 +43,7 @@ public class WebController {
     @PatchMapping("/alterarSenha/id={id}")
     public ResponseEntity<String> alterarSenha(@PathVariable Long id, @RequestBody Usuario usuario){
         usuarioService.alterarSenha(id, usuario.getPassword());
-        String u = "Senha alterada com sucesso!!";
-        return ResponseEntity.status(HttpStatus.OK).body(u);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/usuariosCadastrados")
