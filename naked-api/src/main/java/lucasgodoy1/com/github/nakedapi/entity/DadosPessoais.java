@@ -1,5 +1,6 @@
 package lucasgodoy1.com.github.nakedapi.entity;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -10,13 +11,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Getter @Setter @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name="tb_usuario")
-public class Usuario implements Serializable {
+@Table(name="tb_dados_pessoais")
+public class DadosPessoais implements Serializable {
+
     @Id
     @Column(name="cpf", nullable = false, unique = true, length = 200)
     private Long cpf;
@@ -24,15 +25,19 @@ public class Usuario implements Serializable {
     @Column(name="nome", nullable = false)
     private String nomeCompleto;
 
-    @Column(name="email", nullable = false)
-    private String email;
+    @Column(name="endereco")
+    private String endereco;
 
-    @Column(name="password", nullable = false, length = 200)
-    private String password;
+    @Column(name="telefone")
+    private String telefone;
 
-    @Column(name= "data_criacao")
-    private LocalDateTime dataCriacao = LocalDateTime.now();
+    @Column(name="cep")
+    private String cep;
 
+    @Column(name="bairro")
+    private String bairro;
 
+    @Column(name="nacionalidade")
+    private String nacionalidade;
 
 }

@@ -41,6 +41,7 @@ public class UsuarioService {
         return repository.findAll();
     }
 
+
     @Transactional
     public void deletePorID(Long id){
         repository.deleteById(id);
