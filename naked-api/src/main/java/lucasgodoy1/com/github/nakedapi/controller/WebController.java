@@ -1,8 +1,10 @@
 package lucasgodoy1.com.github.nakedapi.controller;
 
 import lombok.RequiredArgsConstructor;
+import lucasgodoy1.com.github.nakedapi.entity.Conta;
 import lucasgodoy1.com.github.nakedapi.entity.DadosPessoais;
 import lucasgodoy1.com.github.nakedapi.entity.Usuario;
+import lucasgodoy1.com.github.nakedapi.service.ContaService;
 import lucasgodoy1.com.github.nakedapi.service.DadosPessoaisService;
 import lucasgodoy1.com.github.nakedapi.service.UsuarioService;
 import org.springframework.http.HttpStatus;
@@ -17,11 +19,17 @@ import java.util.List;
 public class WebController {
     private final UsuarioService usuarioService;
     private final DadosPessoaisService dadosPessoaisService;
+    private final ContaService contaService;
+
 
 
     @PostMapping("/create")
     public ResponseEntity<Usuario> create(@RequestBody Usuario usuario){
+        String senhaCodificada =  ContaService.encoder(usuario.getPassword());
+        usuario.setPassword(senhaCodificada);
+
         usuarioService.salvar(usuario);
+        usuario.setPassword("*****");
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
     @PostMapping("/createlista")
@@ -81,6 +89,33 @@ public class WebController {
         dadosPessoaisService.deleteInfoPorID(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @GetMapping("/fazerLogin")
+    public ResponseEntity<Boolean> ValidarSenha(@RequestParam Long cpf, @RequestParam String senha) {
+        Usuario u = usuarioService.encontrePorID(cpf);
+
+        if (u != null && ContaService.compararSenha(senha, u.getPassword())) {
+            return ResponseEntity.status(HttpStatus.OK).body(true);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+    }
+
+    @PostMapping("/createConta={id}")
+    public ResponseEntity<Conta> createConta(@RequestBody Conta c, @PathVariable Long id){
+    DadosPessoais u = dadosPessoaisService.encontrePorID(id);
+    contaService.salvarComId(c, id);
+   return ResponseEntity.status(HttpStatus.CREATED).body(c);
+    }
+
+    @GetMapping("/buscarContaPor={id}")
+    public ResponseEntity<Conta> buscarContaPorID(@PathVariable Long id){
+        Conta u = contaService.encontrePorID(id);
+        return ResponseEntity.ok().body(u);
+    }
+
+
+
 
 
 

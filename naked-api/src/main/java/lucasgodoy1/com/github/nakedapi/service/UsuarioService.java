@@ -24,13 +24,13 @@ public class UsuarioService {
 
     @Transactional
     public Usuario encontrePorID(Long id){
-        Usuario u = repository.findById(id).get();
+        Usuario u = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
         return u;
     }
 
     @Transactional
     public  void alterarSenha(Long id, String senha){
-        Usuario usuario = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+        Usuario usuario = encontrePorID(id);
         usuario.setPassword(senha);
     }
 
@@ -46,6 +46,8 @@ public class UsuarioService {
     public void deletePorID(Long id){
         repository.deleteById(id);
     }
+
+
 
 
 
