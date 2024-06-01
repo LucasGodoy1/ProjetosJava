@@ -3,12 +3,13 @@ package lucasgodoy1.com.github.nakedapi.service;
 import lombok.RequiredArgsConstructor;
 import lucasgodoy1.com.github.nakedapi.entity.Conta;
 import lucasgodoy1.com.github.nakedapi.entity.DadosPessoais;
+import lucasgodoy1.com.github.nakedapi.entity.Extrato;
 import lucasgodoy1.com.github.nakedapi.repository.ContaRepository;
 import lucasgodoy1.com.github.nakedapi.repository.DadosPessoaisRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -19,14 +20,11 @@ public class ContaService {
     private final DadosPessoaisRepository dadosPessoaisRepository;
     private static final Random random = new Random();
 
-
-    //torna a senha passada em um hash
     public static String encoder(String senha) {
         BCryptPasswordEncoder encoderSenha = new BCryptPasswordEncoder();
         return encoderSenha.encode(senha);
     }
 
-    //comapra a senah hash do usuario com o hash no bd
     public static Boolean compararSenha(String requestSenha, String senhaRegistrada) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.matches(requestSenha, senhaRegistrada);
@@ -44,20 +42,51 @@ public class ContaService {
         return numeroConta.toString();
     }
 
-
-    public Conta salvarComId(Conta conta , Long id){
-        DadosPessoais  dados = dadosPessoaisRepository.findById(id).get();
+    @Transactional
+    public Conta salvarComId(Conta conta, Long id) {
+        DadosPessoais dados = dadosPessoaisRepository.findById(id).orElseThrow(() -> new RuntimeException("Dados pessoais não encontrados"));
         conta.setNomeCompleto(dados.getNomeCompleto());
         contaRepository.save(conta);
         return conta;
     }
 
-    public Conta encontrePorID(Long id){
-        Conta u = contaRepository.findById(id).get();
-        return u;
+    @Transactional(readOnly = true)
+    public Conta encontrePorID(Long id) {
+        Conta conta = contaRepository.findById(id).orElseThrow(() -> new RuntimeException("Conta não encontrada"));
+        initializeExtratoList(conta);
+        return conta;
     }
 
+    private void initializeExtratoList(Conta conta) {
+        List<Extrato> extratoList = conta.getExtratoList();
+        extratoList.size(); // Força a inicialização
+    }
 
+    public static void adicionarSaldo(Conta c, Double valor) {
+        c.setSaldo(c.getSaldo() + valor);
+    }
+
+    @Transactional
+    public boolean transferencia(Conta contaOrigem, Conta contaDestino, Double valor) {
+        if (contaOrigem.getSaldo() >= valor) {
+            contaOrigem.setSaldo(contaOrigem.getSaldo() - valor);
+            ContaService.adicionarSaldo(contaDestino, valor);
+
+            Extrato transacaoOrigem = new Extrato("Transferencia", valor);
+            Extrato transacaoDestino = new Extrato("Transferencia Recebida", valor);
+
+            transacaoOrigem.setConta(contaOrigem);
+            transacaoDestino.setConta(contaDestino);
+
+            contaOrigem.getExtratoList().add(transacaoOrigem);
+            contaDestino.getExtratoList().add(transacaoDestino);
+
+            contaRepository.save(contaOrigem);
+            contaRepository.save(contaDestino);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
-
-

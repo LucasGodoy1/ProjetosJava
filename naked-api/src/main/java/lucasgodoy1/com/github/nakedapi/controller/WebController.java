@@ -114,6 +114,16 @@ public class WebController {
         return ResponseEntity.ok().body(u);
     }
 
+    @PostMapping("/transferencia")
+    public ResponseEntity<Boolean> transferir(@RequestParam Long contaOrigem, @RequestParam Long contaDestino, @RequestParam Double valor ){
+        Conta origem = contaService.encontrePorID(contaOrigem);
+        Conta destino = contaService.encontrePorID(contaDestino);
+
+        contaService.transferencia(origem, destino, valor);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 
 
 
