@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+//TODO: corrigir url tornando um paddrão de nomes
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/nakedBank")
@@ -54,7 +54,7 @@ public class WebController {
 
     @PatchMapping("/alterarSenha/id={id}")
     public ResponseEntity<String> alterarSenha(@PathVariable Long id, @RequestBody Usuario usuario){
-        usuarioService.alterarSenha(id, usuario.getPassword());
+        usuarioService.alterarSenha(id, ContaService.encoder(usuario.getPassword()));
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -94,7 +94,7 @@ public class WebController {
     public ResponseEntity<Boolean> ValidarSenha(@RequestParam Long cpf, @RequestParam String senha) {
         Usuario u = usuarioService.encontrePorID(cpf);
 
-        if (u != null && ContaService.compararSenha(senha, u.getPassword())) {
+        if (u != null && contaService.compararSenha(senha, u.getPassword())) {
             return ResponseEntity.status(HttpStatus.OK).body(true);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);

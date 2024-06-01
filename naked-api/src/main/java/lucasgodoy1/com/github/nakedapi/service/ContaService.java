@@ -25,7 +25,8 @@ public class ContaService {
         return encoderSenha.encode(senha);
     }
 
-    public static Boolean compararSenha(String requestSenha, String senhaRegistrada) {
+    @Transactional
+    public Boolean compararSenha(String requestSenha, String senhaRegistrada) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.matches(requestSenha, senhaRegistrada);
     }
@@ -61,8 +62,8 @@ public class ContaService {
         List<Extrato> extratoList = conta.getExtratoList();
         extratoList.size(); // Força a inicialização
     }
-
-    public static void adicionarSaldo(Conta c, Double valor) {
+    @Transactional
+    public void adicionarSaldo(Conta c, Double valor) {
         c.setSaldo(c.getSaldo() + valor);
     }
 
@@ -70,7 +71,7 @@ public class ContaService {
     public boolean transferencia(Conta contaOrigem, Conta contaDestino, Double valor) {
         if (contaOrigem.getSaldo() >= valor) {
             contaOrigem.setSaldo(contaOrigem.getSaldo() - valor);
-            ContaService.adicionarSaldo(contaDestino, valor);
+            this.adicionarSaldo(contaDestino, valor);
 
             Extrato transacaoOrigem = new Extrato("Transferencia", valor);
             Extrato transacaoDestino = new Extrato("Transferencia Recebida", valor);

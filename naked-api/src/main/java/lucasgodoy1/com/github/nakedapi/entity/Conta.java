@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-import lucasgodoy1.com.github.nakedapi.service.TipoConta;
 import lucasgodoy1.com.github.nakedapi.service.ContaService;
 
 import java.io.Serializable;
@@ -29,7 +27,6 @@ public class Conta implements Serializable {
     private String numeroAgencia = ContaService.geraNumeroConta(1, 10, 5);
 
     @Column(name = "SALDO")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "0.00")
     private Double saldo = 0.0;
 
     @Column(name = "NOME")
