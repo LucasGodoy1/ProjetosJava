@@ -20,32 +20,50 @@ public class TelegraaAutoMsg extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String messageText = update.getMessage().getText();
-
-
+            String userName = update.getMessage().getFrom().getUserName();
+            String firstName = update.getMessage().getFrom().getFirstName();
+            String lastName = update.getMessage().getFrom().getLastName();
             long chatId = update.getMessage().getChatId();
+            String bsc = messageText.toLowerCase().trim().substring(5);
+            String msg;
+
+
+
+            System.out.println("==========================");
+            System.out.println("Chat ID: " + chatId);
+            System.out.println("User Name: " + (userName != null ? userName : "N/A"));
+            System.out.println("First Name: " + (firstName != null ? firstName : "N/A"));
+            System.out.println("Last Name: " + (lastName != null ? lastName : "N/A"));
+            System.out.println("Message: " + messageText);
+            System.out.println("==========================");
 
             if (messageText.toLowerCase().contains("/vaga")) {
-                String bsc = messageText.toLowerCase().trim().substring(5);
                 try {
                     bsc.trim();
                     sendResponse(chatId, "Aguarde...");
                     var e = new Encontre();
                     vagasEncontradas = e.iniciarBusca(bsc);
+                    msg = "Total de vagas encontradas: " + vagasEncontradas.size() + emoji + " buscado por: " + bsc;
+
 
                     if (!vagasEncontradas.isEmpty()) {
-                        sendResponse(chatId, "Total de vagas encontradas: " + vagasEncontradas.size() + emoji + "buscado por: " + bsc);
+
+                        sendResponse(chatId, msg);
                         vagasEncontradas.forEach(link -> sendResponse(chatId, link));
+                        System.out.println(msg);
 
                     } else {
-                        sendResponse(chatId, "Nenhuma Vaga encontrada " + "\uD83D\uDE05" + "buscado por: " + bsc);
+                        msg = "Nenhuma Vaga encontrada " + "\uD83D\uDE05" + " buscado por: " + bsc;
+                        sendResponse(chatId, msg);
+                        System.out.println(msg);
                     }
 
 
                 } catch (IOException | InterruptedException ex) {
                     throw new RuntimeException(ex);
                 } finally {
-                    sendResponse(chatId, "Obrigado por  usar o BOb Bot V1.1_Pre_Alpha ©️" +
-                            "\n gitHub.com/LucasGodoy1");
+                    sendResponse(chatId, "Obrigado por  usar o BOb Bot\n V1.1_Pre_Alpha " +
+                            "\n ©️ gitHub.com/LucasGodoy1");
 
                     vagasEncontradas.clear();
                 }
