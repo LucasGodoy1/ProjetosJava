@@ -34,6 +34,6 @@ public class Vaga {
     @Override
     public String toString() {
         return "Site: " + site + "\n" +
-                "Vagas:\n\n " + String.join("\n\n ", titulo);
+                "Vagas:\n\n " + String.join("\n\n ", titulo) + "\n";
     }
 }

@@ -36,15 +36,21 @@ public abstract class ConsultaHttp {
                 Document doc = Jsoup.parse(resultado);
                 Elements elements = doc.select("ul[data-testid='job-list__list'] li[data-testid='job-list__listitem']");
 
-                if (!elements.isEmpty()) {
-                    var vagaEncontrada = new Vaga(site);
-                    List<String> vagas = elements.stream()
-                            .map(element -> element.select("div.sc-f5007364-4").text())
-                            .filter(text -> !text.isEmpty() && text.toLowerCase().contains(palavra.toLowerCase()))
-                            .toList();
+                List<String> vagas = elements.stream()
+                        .map(element -> element.select("div.sc-f5007364-4").text())
+                        .filter(text -> !text.isEmpty() && text.toLowerCase().contains(palavra.toLowerCase()))
+                        .toList();
 
-                    if (!vagas.isEmpty()) {
-                        vagas.forEach(vagaEncontrada::setTitulo);
+                if (!vagas.isEmpty()) {
+                    var vagaEncontrada = new Vaga(site);
+                    vagas.forEach(vagaEncontrada::setTitulo);
+                    return vagaEncontrada.toString();
+                } else {
+                    Elements elementsContainingWord = doc.body().select("*:contains(" + palavra + ")");
+                    if (!elementsContainingWord.isEmpty()) {
+                        var vagaEncontrada = new Vaga(site);
+                        String vaga = "Foi encontrado a vaga " + palavra + ", mas não foi possível coletar o nome!";
+                        vagaEncontrada.setTitulo(vaga);
                         return vagaEncontrada.toString();
                     }
                 }
@@ -54,4 +60,5 @@ public abstract class ConsultaHttp {
         }
         return "";
     }
+
 }

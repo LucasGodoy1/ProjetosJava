@@ -65,6 +65,8 @@ public class TelegraaAutoMsg extends TelegramLongPollingBot {
                     sendResponse(chatId, "Obrigado por  usar o BOb Bot\n V1.1_Pre_Alpha " +
                             "\n ©️ gitHub.com/LucasGodoy1");
 
+                    System.out.println("====================");
+                    vagasEncontradas.forEach(System.out::println);
                     vagasEncontradas.clear();
                 }
 
