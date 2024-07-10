@@ -24,8 +24,14 @@ public class TelegraaAutoMsg extends TelegramLongPollingBot {
             String firstName = update.getMessage().getFrom().getFirstName();
             String lastName = update.getMessage().getFrom().getLastName();
             long chatId = update.getMessage().getChatId();
-            String bsc = messageText.toLowerCase().trim().substring(5);
+            String bsc = messageText.toLowerCase();
+            try {
+            bsc = messageText.toLowerCase().trim().substring(5); //pega após a palavra vaga
+            }catch (StringIndexOutOfBoundsException e){
+                System.out.println("Erro a busca não iniciou com '/vaga' foi iniciado com --> " + bsc + " \n" + e);
+            }
             String msg;
+            bsc = bsc.trim();
 
 
 
@@ -37,9 +43,8 @@ public class TelegraaAutoMsg extends TelegramLongPollingBot {
             System.out.println("Message: " + messageText);
             System.out.println("==========================");
 
-            if (messageText.toLowerCase().contains("/vaga")) {
+            if (messageText.toLowerCase().contains("/vaga") && !bsc.isEmpty()) {
                 try {
-                    bsc.trim();
                     sendResponse(chatId, "Aguarde...");
                     var e = new Encontre();
                     vagasEncontradas = e.iniciarBusca(bsc);
@@ -71,6 +76,10 @@ public class TelegraaAutoMsg extends TelegramLongPollingBot {
                 }
 
 
+            }else {
+                sendResponse(chatId,"===========⚠️ALERTA⚠️===========" +
+                        "\nPara iniciar uma busca Digite: " +
+                        "\n /vaga AquioNomeDaVaga");
             }
         }
     }
@@ -92,7 +101,7 @@ public class TelegraaAutoMsg extends TelegramLongPollingBot {
 
         try {
             botsApi.registerBot(this);
-            System.out.println("Bot iniciado. Pressione Ctrl-C para encerrar.");
+            System.out.println("Bot Online!");
 
         } catch (TelegramApiException e) {
             e.printStackTrace();

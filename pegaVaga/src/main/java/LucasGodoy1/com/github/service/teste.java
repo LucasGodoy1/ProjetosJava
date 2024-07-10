@@ -1,11 +1,6 @@
 package LucasGodoy1.com.github.service;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.time.Duration;
 import java.util.List;
 
 
@@ -13,7 +8,7 @@ public class teste {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         var e = new Encontre();
-        List<String> vagasEncontradas = e.iniciarBusca("estágio");
+        List<String> vagasEncontradas = e.iniciarBusca("java");
         System.out.println("Resultados enconttrados: " + vagasEncontradas.size());
         vagasEncontradas.forEach(System.out::println);
 

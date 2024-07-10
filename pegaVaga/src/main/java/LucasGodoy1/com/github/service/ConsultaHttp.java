@@ -11,7 +11,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class ConsultaHttp {
     private static final HttpClient client = HttpClient.newBuilder()
@@ -38,7 +37,7 @@ public abstract class ConsultaHttp {
 
                 List<String> vagas = elements.stream()
                         .map(element -> element.select("div.sc-f5007364-4").text())
-                        .filter(text -> !text.isEmpty() && text.toLowerCase().contains(palavra.toLowerCase()))
+                        .filter(text -> !text.isEmpty() && text.toLowerCase().contains(palavra))
                         .toList();
 
                 if (!vagas.isEmpty()) {
@@ -49,7 +48,7 @@ public abstract class ConsultaHttp {
                     Elements elementsContainingWord = doc.body().select("*:contains(" + palavra + ")");
                     if (!elementsContainingWord.isEmpty()) {
                         var vagaEncontrada = new Vaga(site);
-                        String vaga = "Foi encontrado a vaga " + palavra + ", mas não foi possível coletar o nome!";
+                        String vaga = "⚠️Foi encontrado a vaga " + "'" + palavra +"'" + " no site acima, mas não foi possível coletar o nome⚠️️";
                         vagaEncontrada.setTitulo(vaga);
                         return vagaEncontrada.toString();
                     }
