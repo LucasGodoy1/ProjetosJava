@@ -5,10 +5,11 @@ import java.util.List;
 
 public class Vaga {
     private String site;
-    private List<String> titulo = new ArrayList<>();
+    private List<String> titulo;
 
     public Vaga(String site) {
         this.site = site;
+        titulo = new ArrayList<>();
     }
 
     public String getSite() {
@@ -23,11 +24,11 @@ public class Vaga {
         return titulo;
     }
 
-    public void setTitulo(String titulo) {
+    public void adcTitulo(String titulo) {
         this.titulo.add(titulo);
     }
 
-    public void setTitulo(List<String> titulos) {
+    public void adcTitulo(List<String> titulos) {
         this.titulo.addAll(titulos);
     }
 

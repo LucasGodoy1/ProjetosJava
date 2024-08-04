@@ -14,7 +14,7 @@ import java.util.List;
 public class TelegraaAutoMsg extends TelegramLongPollingBot {
     final String emoji = "\uD83D\uDE80\uD83C\uDF89\uD83C\uDF8A";
     private List<String> vagasEncontradas;
-
+    private String msg;
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -26,11 +26,18 @@ public class TelegraaAutoMsg extends TelegramLongPollingBot {
             long chatId = update.getMessage().getChatId();
             String bsc = messageText.toLowerCase();
             try {
-            bsc = messageText.toLowerCase().trim().substring(5); //pega após a palavra vaga
+                bsc = messageText.toLowerCase(); //pega após a palavra vaga
+
+                if (bsc.startsWith("/vagas")){
+                bsc = bsc.trim().substring(6); //pega após a palavra vaga
+                }else if (bsc.startsWith("/vaga")){
+                bsc = bsc.trim().substring(5); //pega após a palavra vaga
+                }
+
             }catch (StringIndexOutOfBoundsException e){
                 System.out.println("Erro a busca não iniciou com '/vaga' foi iniciado com --> " + bsc + " \n" + e);
             }
-            String msg;
+
             bsc = bsc.trim();
 
 
@@ -45,7 +52,7 @@ public class TelegraaAutoMsg extends TelegramLongPollingBot {
 
             if (messageText.toLowerCase().contains("/vaga") && !bsc.isEmpty()) {
                 try {
-                    sendResponse(chatId, "Aguarde...");
+                    sendResponse(chatId, "Buscando...");
                     var e = new Encontre();
                     vagasEncontradas = e.iniciarBusca(bsc);
                     msg = "Total de vagas encontradas: " + vagasEncontradas.size() + emoji + " buscado por: " + bsc;
@@ -64,14 +71,13 @@ public class TelegraaAutoMsg extends TelegramLongPollingBot {
                     }
 
 
-                } catch (IOException | InterruptedException ex) {
-                    throw new RuntimeException(ex);
+                } catch (RuntimeException e) {
+                    System.out.println("Erro! " + e);
                 } finally {
                     sendResponse(chatId, "Obrigado por  usar o BOb Bot\n V1.1_Pre_Alpha " +
                             "\n ©️ gitHub.com/LucasGodoy1");
 
-                    System.out.println("====================");
-                    vagasEncontradas.forEach(System.out::println);
+                    System.out.println("==========================");
                     vagasEncontradas.clear();
                 }
 
@@ -115,7 +121,7 @@ public class TelegraaAutoMsg extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return System.getenv("TELEGRAM_BOT_TOKEN");
+        return "7276595615:AAF7MEFOe3UcUwFFdi1p_ebBYxM4XjKIiq4";
     }
 
 
