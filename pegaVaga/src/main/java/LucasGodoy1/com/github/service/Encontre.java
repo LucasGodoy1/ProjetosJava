@@ -1,5 +1,6 @@
 package LucasGodoy1.com.github.service;
 
+import LucasGodoy1.com.github.model.Vaga;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -60,25 +61,25 @@ public class Encontre {
             }
         }
 
-        executorService.shutdown();
         return resultados;
     }
-    private String encontreSuaVaga(String site, String palavra){
+    public String encontreSuaVaga(String site, String palavra){
        var resultado = ConsultaHttp.coletaCorpoDoSite(site);
 
         if (resultado != null) {
             Document doc = Jsoup.parse(resultado);
             Elements elements = doc.select("ul[data-testid='job-list__list'] li[data-testid='job-list__listitem']");
 
-            List<String> vagas = elements.stream()
+            List<String> listaDeVagas = elements.stream()
                     .map(element -> element.select("div.sc-f5007364-4").text())
                     .filter(text -> !text.isEmpty() && text.toLowerCase().contains(palavra))
                     .toList();
 
-            if (!vagas.isEmpty()) {
+            if (!listaDeVagas.isEmpty()) {
                 var vagaEncontrada = new Vaga(site);
-                vagas.forEach(vagaEncontrada::adcTitulo);
+                listaDeVagas.forEach(vagaEncontrada::adcTitulo);
                 return vagaEncontrada.toString();
+
             } else {
                 Elements elementsContainingWord = doc.body().select("*:contains(" + palavra + ")");
                 if (!elementsContainingWord.isEmpty()) {

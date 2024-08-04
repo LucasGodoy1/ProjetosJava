@@ -1,4 +1,4 @@
-package LucasGodoy1.com.github.service;
+package LucasGodoy1.com.github.model;
 
 import java.util.ArrayList;
 import java.util.List;

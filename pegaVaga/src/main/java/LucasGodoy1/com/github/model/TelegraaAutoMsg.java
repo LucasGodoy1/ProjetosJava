@@ -121,7 +121,7 @@ public class TelegraaAutoMsg extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "7276595615:AAF7MEFOe3UcUwFFdi1p_ebBYxM4XjKIiq4";
+        return System.getenv("TELEGRAM_BOT_TOKEN");
     }
 
 
